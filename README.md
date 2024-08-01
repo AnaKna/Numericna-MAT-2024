@@ -1,158 +1,152 @@
-# Vaje pri predmetu Numerična matematika
+# 1. DOMAČA NALOGA: Gauss-Legendrove kvadrature
 
-## Navodila
+# Ana Knafelc, maj 2024
 
-To je projekt za delo pri predmetu [Numerična matematika](https://ucilnica.fri.uni-lj.si/course/view.php?id=117). Projekt je na začetku semestra prazen, tekom semestra bomo na vsakih vajah dodali rešitve. Gradiva z bolj podrobnim opisom so pripravljena v repozitoriju [z gradivi](https://nummat.gitlab.io/vaje-nummat/).
+## Opis
 
-Predlagam, da si vsak naredi svoj Git repozitorij (na Gitlabu, Githubu ali kje drugje), kjer si uredi kodo in dokumentacijo, ki jo bomo pisali pri tem predmetu. Prav tako bomo git
-uporabljali za oddajo domačih nalog.
+V projektu je podana implementacija funkcij za izračun odmika nihala ob poljubnem času.
 
-## Navodila za hiter začetek
+<br/>
 
-Ob začetku vaje si najprej ustvarimo direktorij oziroma paket za Julio[^1], kjer bo shranjeno naše delo
 
+## Mapa src
+
+V mapi "**src**", v skripti **Nihala.py** se nahajajo glavne funkcije za izračun:
+- kotnega odmika nitnega nihala pri nedušenem nihanju (funkcija nitno_nihalo),
+- odmika harmoničnega vzmetnega nihala pri nedušenem nihanju (funkcija harmonično_nihalo), 
+- kotnega odmika nitnega nihala pri dušenem nihanju (funkcija duseno_nitno_nihalo),
+- odmika harmoničnega vzmetnega nihala pri dušenem nihanju (funkcija duseno_harmonicno_nihalo).
+
+<br/>
+
+Primer uporabe funkcije **nitno_nihalo**:
+
+    # Gravitacijski pospešek [m/s^2]
+    g = 9.80665
+    # Dolžina niahala [m]
+    l = 1.0
+    # Čas pri katerme želimo odčitati odmik nihala [s]
+    t = 3
+    # Število razdelitev na območju [0,t]
+    n = 1000
+
+    # Začetni pogoji
+    initial_angle = 0.3 # Začetni odmik [rad]
+    initial_speed = 0   # Začetna kotna hitrsot [rad/s] 
+
+    displacement = nitno_nihalo(l, t, initial_angle, initial_speed, n, True)
+    print("Odmik nitenga nihala ob času t=" + str(t) + "s je " + str(round(displacement[0],5)) + " rad")
+
+
+<br/>
+
+
+Primer uporabe funkcije **harmonično_nihalo**:
+
+    # Koeficient vzmeti [N/m]
+    k = 0.5
+    # Masa uteži [kg]
+    m = 1.0
+    # Čas pri katerme želimo odčitati odmik nihala [s]
+    t = 100
+    # Število razdelitev na območju [0,t]
+    n = 1000
+
+    # Initial conditions
+    initial_position = 1.0  # začetni odmik nihala [m]
+    initial_velocity = 0.0  # začetna kotna hitrost nihala [m/s]
+
+    displacement = harmonično_nihalo(m, k, t, initial_position, initial_velocity, n, True)
+    print("Odmik harmoničnega vzmetnega nihala ob času t=" + str(t) + "s je " + str(round(displacement[0],5)) + " m")
+
+
+
+<br/>
+
+
+
+Primer uporabe funkcije **duseno_nitno_nihalo**:
+
+    # Gravitacijski pospešek [m/s^2]
+    g = 9.80665
+    # Masa uteži [kg]
+    m = 1
+    # Koeficient dušenja [kg/s]
+    b = 0.3
+    # Dolžina niahala [m]
+    l = 10
+    # Čas pri katerme želimo odčitati odmik nihala [s]
+    t = 100
+    # Število razdelitev na območju [0,t]
+    n = 10000
+
+    # Initial conditions
+    initial_position = 0.8  # začetni odmik nihala [rad]
+    initial_velocity = 0.0   # začetna kotna hitrost nihala [rad/s]
+
+    displacement, oscilation_time = duseno_nitno_nihalo(m, l, g, b, t, initial_position, initial_velocity, n, True)
+    print("Odmik dušenega nitenga nihala ob času t=" + str(t) + "s je  " + str(round(displacement[0],5)) + " rad")
+
+
+
+<br/>
+
+
+Primer uporabe funkcije **duseno_harmonicno_nihalo**:
+
+    # Koeficient vzmeti [N/m]
+    k = 10
+    # Masa uteži [kg]
+    m = 10
+    # Koeficient dušenja [kg/s]
+    b = 0.6
+    # Čas pri katerme želimo odčitati odmik nihala [s]
+    t = 100
+    # Število razdelitev na območju [0,t]
+    n = 10000
+
+    # Initial conditions
+    initial_position = 2  # začetni odmik nihala [m]
+    initial_velocity = 0.0   # začetna kotna hitrost nihala [m/s]
+
+    displacement, oscilation_time = duseno_harmonicno_nihalo(m, k, b, t, initial_position, initial_velocity, n, True)
+    print("Odmik dušenega harmoničnega vzmetnega nihala ob času t=" + str(t) + "s je  " + str(round(displacement[0],5)) + " m")
+
+
+<br/>
+
+
+Vse zgoraj navedene primere lahko preizkusite v skript **Pokritost_kode.py**.
+
+<br/>
+<br/>
+
+## Mapa tests
+
+V mapi "**tests**" se nahajajo naslednji testi:
+- Test računanja kotnega odmika nihanja nitnega nihala brez dušenja,
+- Test računanja odmika harmoničnega nihanja vzmetnega nihala brez dušenja,
+- Test računanja kotnega odmika nihanja nitnega nihala z dušenjem,
+- Test računanja odmika harmoničnega nihanja vzmetnega z dušenjem,
+
+
+<br/>
+Vsi testi so uspešni z natančnostjo na najmanj 2 decimalki.
+<br/>
+<br/>
+<br/>
+<br/>
+
+V skripti **00_Pokritost_kode.py** se izvedejo vse funkcije in njihove metode z namenom testiranja delovanja celotnega programa.\
+Test pokritosti kode izvedemo v terminalu z naslednjimi zaporednimi ukazi:
 ```shell
-$ julia
-julia> # pritisnemo ], da pridemo v način pkg
-pkg> activate . # aktiviramo delovno okolje v trenutnem direktoriju (npr. vaje)
-(vaje)pkg> generate VajaXY # generiramo ogrodje za novo vajo
-(vaje)pkg> develop VajaXY  # dodamo pravkar generirano vajo v delovno okolje
-(vaje) pkg> # pritisnemo tipko za brisanje nazaj, da zopet pridemo v navaden način
-julia>
+python -m coverage run tests\00_Pokritost_kode.py report
 ```
-
-Zgornji ukazi ustvarijo direktorij `VajaXY` z osnovno struktura [paketa v Jiliji](https://pkgdocs.julialang.org/v1/creating-packages/). Za bolj obsežen projekt, lahko uporabite [šablono PkgTemplates](https://github.com/JuliaCI/PkgTemplates.jl) ali [PkgSkeleton.jl](https://github.com/tpapp/PkgSkeleton.jl).
-
+in
 ```shell
-julia> cd("VajaXY") # pritisnemo ;, da pridemo v način lupine
-shell> tree .
-.
-├── Project.toml
-└── src
-    └── VajaXY.jl
-
-1 directory, 2 files
-
+coverage report -m
 ```
+<br/>
 
-Direktoriju dodamo še teste, skripte z demnostracijsko kodo in README dokument.
-
-```shell
-shell> mkdir test
-shell> touch test/runtests.jl
-shell> touch README.md
-shell> mkdir scripts
-shell> touch scripts/demo.jl
-shell> tree .
-.
-├── Manifest.toml
-├── Project.toml
-├── scripts
-│   └── demo.jl
-├── src
-│   └── VajaXY.jl
-└── test
-    └── runtests.jl
-```
-
-Ko je direktorij s kodo pripravljen lahko naložimo kodo iz `VajaXY.jl` v ukazni vrstici
-
-```shell
-julia> using VajaXY
-julia> VajaXY.moja_super_funkcija()
-```
-
-Boljša možnost je, da kodo uporabimo v scripti npr. `scripts\demo.jl`.
-
-```jl
-# demo.jl vsebuje primere uporabe funkcije iz modula/paketa VajaXY
-using VajaXY
-
-VajaXY.moja_super_funkcija()
-```
-
-Scripto lahko poženemo z ukazom `ìnclude`.
-
-```shell
-julia> include("scripts/demo.jl")
-```
-
-Začetno strukturo paketa si lahko shranimo v šablono in uporabimo [PkgSkeleton.jl](https://github.com/tpapp/PkgSkeleton.jl) za generiranje novih paketov.
-
-### Testi
-
-Vstopna točka za teste je `test\runtests.jl`. Paket [Test](https://docs.julialang.org/en/v1/stdlib/Test/) omogoča pisanje enotskih testov, ki se lahko avtomatično izvedejo v sistemu [nenehne integracije (Continuous Integration)](https://en.wikipedia.org/wiki/Continuous_integration).
-
-V juliji teste pišemo z makroji [@test](https://docs.julialang.org/en/v1/stdlib/Test/#Test.@test) in [@testset](https://docs.julialang.org/en/v1/stdlib/Test/#Test.@testset). Če `test/runtests.jl` lahko napišemo
-
-```jl
-using Test, VajaXY
-
-@test VajaXY.funkcija_ki_vrne_ena() == 1
-```
-
-Lahko teste poženemo tako, da v `pkg` načinu poženemo ukaz `test VajeXY`
-
-```shell
-(vaje) pkg> test VajeXY
-
-    Testing Running tests...
-    Testing VajaXY tests passed
-```
-
-### Dokumentacija
-
-Za pisanje dokumentacijo navadno uporabimo format [Markdown](https://en.wikipedia.org/wiki/Markdown). S paketom [Documenter](https://documenter.juliadocs.org/stable/) lahko komentarje v kodi in markdown dokumentente združimo in generiramo HTML ali PDF dokumentacijo s povezavo na izvorno kodo.
-
-Za pripravo posameznih poročil lahko uporabite [IJulia](https://github.com/JuliaLang/IJulia.jl), [Weave.jl](https://github.com/JunoLab/Weave.jl), [Literate.jl](https://github.com/fredrikekre/Literate.jl) ali [Quadro](https://quarto.org/docs/computations/julia.html).
-
-## Organizacija direktorijev
-
-- `vaje` direktorij z vajami, ki služi kot [delovno okolje](https://pkgdocs.julialang.org/v1/environments/)
-- `vaje/VajaXY` vsaka vaja ima svoj direktorij
-- posamezen direktorij za vajo je organiziran kot paket s kodo, testi in dokumentacijo
-
-        vaje
-         └── Vaja01
-           ├── Project.toml
-           ├── README.md
-           ├── src
-           |   └─ Vaja01.jl
-           ├── test
-           |   └─ runtests.jl
-           ├── doc
-           |   ├─  makedocs.jl
-           |   └─ index.md
-           └─ scripts
-              └─ demo.jl
-
-## Delovno okolje
-
-Za hitrejše in lažje delo z programskim jezikom `julia` uporabite [Revise](https://timholy.github.io/Revise.jl/stable/). Pred začetkom dela poženite
-
-```julia
-julia> using Revise
-```
-Zgornji ukaz bo poskrbel, da se bodo definicije funkcij sproti posodabljale, ko bomo spreminjali kodo v datotekah.
-
-Če želite,  da se `Revise` zažene ob vsakem zagonu programa `julia`, lahko datoteko `startup.jl` namestite v `.julia/config/startup.jl`
-
-```shell
-$ cp startup.jl $HOME/.julia/config/startup.jl
-```
-### Generiranje PDF dokumentov
-
-Za generiranje PDF dokumentov s paketi [Documenter](https://documenter.juliadocs.org/stable/) ali [Weave.jl](https://github.com/JunoLab/Weave.jl) je potrebno namestiti [TeX/LaTeX](https://tug.org/). Priporočam uporabo [TinyTeX](https://yihui.org/tinytex/).
-Po [namestitvi](https://yihui.org/tinytex/#installation) tinytex, dodamo še nekaj `LaTeX` paketov, tako da v terminalu izvedemo naslednji ukaz
-
-```
-tlmgr install microtype upquote minted
-```
-
-## Povezave
-
-- [Način dela za Gitlab (Gitlab Flow)](https://docs.gitlab.com/ee/topics/gitlab_flow.html).
-- [Priporočila za stil Julia](https://docs.julialang.org/en/v1/manual/style-guide/).
-- [Naveti za delo z Julijo](https://docs.julialang.org/en/v1/manual/workflow-tips/).
-
-[^1]: Na vajah bomo uporabljali programski jezik Julia. Študentje lahko, če želijo, na vajah in za izdelavo domačih nalog uporabljajo katerikoli programski jezik.
+Pokritost kode je 100%.
+<br/>
