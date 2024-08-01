@@ -123,21 +123,22 @@ Vse zgoraj navedene primere lahko preizkusite v skript **Pokritost_kode.py**.
 
 ## Mapa tests
 
-V mapi "**tests**" se nahajajo naslednji testi:
+V mapi "**tests**", v skripti **Test_algoritmov** se nahajajo naslednji testi:
 - Test računanja kotnega odmika nihanja nitnega nihala brez dušenja,
 - Test računanja odmika harmoničnega nihanja vzmetnega nihala brez dušenja,
 - Test računanja kotnega odmika nihanja nitnega nihala z dušenjem,
-- Test računanja odmika harmoničnega nihanja vzmetnega z dušenjem,
+- Test računanja odmika harmoničnega nihanja vzmetnega nihala z dušenjem.
 
 
 <br/>
+Za natančen izračun odmika nihanja vzmetnega in nitnega nihala z dušenjem, je bila uporabljena koda v skripti **DE_Solve.py**.
 Vsi testi so uspešni z natančnostjo na najmanj 2 decimalki.
 <br/>
 <br/>
 <br/>
 <br/>
 
-V skripti **00_Pokritost_kode.py** se izvedejo vse funkcije in njihove metode z namenom testiranja delovanja celotnega programa.\
+V skripti **Pokritost_kode.py** se izvedejo vse funkcije in njihove metode z namenom testiranja delovanja celotnega programa.\
 Test pokritosti kode izvedemo v terminalu z naslednjimi zaporednimi ukazi:
 ```shell
 python -m coverage run tests\00_Pokritost_kode.py report
