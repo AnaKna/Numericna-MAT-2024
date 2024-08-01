@@ -1,6 +1,6 @@
-# 1. DOMAČA NALOGA: Gauss-Legendrove kvadrature
+# 1. DOMAČA NALOGA: Matematiˇcno nihalo
 
-# Ana Knafelc, maj 2024
+# Ana Knafelc, avgust 2024
 
 ## Opis
 
