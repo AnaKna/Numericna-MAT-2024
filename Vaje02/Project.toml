@@ -1,8 +1,0 @@
-name = "Vaje02"
-uuid = "d6267224-3601-4518-956b-40f0190f698e"
-authors = ["Martin Vuk <martin.vuk@agilicity.com>"]
-version = "0.1.0"
-
-[deps]
-IJulia = "7073ff75-c697-5162-941a-fcdaad2a7d2a"
-Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"

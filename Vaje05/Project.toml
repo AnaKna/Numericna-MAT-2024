@@ -1,7 +1,0 @@
-name = "Vaje05"
-uuid = "e99e8a6d-a8c5-4805-834d-95a5219419ae"
-authors = ["Martin Vuk <martin.vuk@agilicity.com>"]
-version = "0.1.0"
-
-[deps]
-Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
