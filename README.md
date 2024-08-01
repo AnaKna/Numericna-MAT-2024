@@ -1,10 +1,10 @@
-# 1. DOMAČA NALOGA: Matematiˇcno nihalo
+# 3. DOMAČA NALOGA: Matematično nihalo
 
 # Ana Knafelc, avgust 2024
 
 ## Opis
 
-V projektu je podana implementacija funkcij za izračun odmika nihala ob poljubnem času.
+V projektu je podana implementacija funkcij za izračun odmika različnih nihal ob poljubnem času.
 
 <br/>
 
@@ -129,11 +129,11 @@ V mapi "**tests**", v skripti **Test_algoritmov** se nahajajo naslednji testi:
 - Test računanja kotnega odmika nihanja nitnega nihala z dušenjem,
 - Test računanja odmika harmoničnega nihanja vzmetnega nihala z dušenjem.
 
-
+<br/>
 <br/>
 Za natančen izračun odmika nihanja vzmetnega in nitnega nihala z dušenjem, je bila uporabljena koda v skripti **DE_Solve.py**.
 Vsi testi so uspešni z natančnostjo na najmanj 2 decimalki.
-<br/>
+
 <br/>
 <br/>
 <br/>
